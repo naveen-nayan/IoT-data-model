@@ -11,16 +11,16 @@ class READMAC:
     def getmac(self):
 
         data = json.loads(self.__mac)
-        pprint(data)
         try:
             mac_eth0 = open(self.__eth0).readline()
             mac_wlan0 = open(self.__eth0).readline()
-            print(mac_eth0)
-            print(mac_wlan0)
+            data["etho"] = mac_eth0
+            data["wlan0"] = mac_wlan0
         except:
             print("some error")
             pass
-
+        pprint(data)
+        return data
 
 def main():
     odj = READMAC()
