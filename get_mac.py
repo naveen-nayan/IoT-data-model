@@ -18,12 +18,12 @@ class READMAC:
         print(list_interface)
         try:
             for interface_name in list_interface:
-                print(interface_name)
-                if "e" == interface_name[0]:
+                print(interface_name[0])
+                if "e" in interface_name[0]:
                     mac_eth = open(self.__interface + '/' + interface_name).readline()
                     print(mac_eth)
                     data["eth"] = mac_eth.split("\n")[0]
-                elif "w" == interface_name[0]:
+                elif "w" in interface_name[0]:
                     mac_wlan = open(self.__interface + '/' + interface_name).readline()
                     print(mac_wlan)
                     data["wlan"] = mac_wlan.split("\n")[0]
