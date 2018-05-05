@@ -14,7 +14,7 @@ class READMAC:
         try:
             mac_eth0 = open(self.__eth0).readline()
             mac_wlan0 = open(self.__eth0).readline()
-            data["etho"] = mac_eth0.split("\n")[0]
+            data["eth0"] = mac_eth0.split("\n")[0]
             data["wlan0"] = mac_wlan0.split("\n")[0]
         except:
             print("some error")
