@@ -15,8 +15,10 @@ class READMAC:
     def getmac(self):
         data = json.loads(self.__mac)
         list_interface = os.listdir(self.__interface)
+        print(list_interface)
         try:
             for interface_name in list_interface:
+                print(interface_name)
                 if "e" == interface_name[0]:
                     mac_eth = open(self.__interface + '/' + interface_name).readline()
                     data["eth"] = mac_eth.split("\n")[0]
