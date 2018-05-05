@@ -43,7 +43,7 @@ class DEVICEINFO:
         cpu = psutil.cpu_percent(interval=1)
         data["CPU%"] = cpu
         # MEMORY % usage
-        memory = psutil.swap_memory()[3]
+        memory = psutil.virtual_memory()[3]
         data["MEMORY%"] = memory
         print data
 
