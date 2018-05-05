@@ -15,16 +15,16 @@ class READMAC:
     def getmac(self):
         data = json.loads(self.__mac)
         list_interface = os.listdir(self.__interface)
-        print(list_interface)
+        # print(list_interface)
         try:
             for interface_name in list_interface:
                 if "e" in interface_name[0]:
                     mac_eth = open(self.__interface + '/' + interface_name + '/address').readline()
-                    print(mac_eth)
+                    # print(mac_eth)
                     data["eth"] = mac_eth.split("\n")[0]
                 elif "w" in interface_name[0]:
                     mac_wlan = open(self.__interface + '/' + interface_name + '/address').readline()
-                    print(mac_wlan)
+                    # print(mac_wlan)
                     data["wlan"] = mac_wlan.split("\n")[0]
                 else:
                     pass
