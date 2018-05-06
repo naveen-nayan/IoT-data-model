@@ -1,2 +1,4 @@
 #pip install psutil
 psutil==4.3.0
+#pip install python-firebase
+python-firebase==1.2
