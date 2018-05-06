@@ -71,7 +71,7 @@ class DEVICEINFO:
     def add_cron(self):
         username = getpass.getuser()
         my_cron = CronTab(user=username)
-        job = my_cron.new(command=self.__work_path + '/device_info.py')
+        job = my_cron.new(command='python' + self.__work_path + '/device_info.py')
         job.minute.every(1)
         my_cron.write()
         pass
