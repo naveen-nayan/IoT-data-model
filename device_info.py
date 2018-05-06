@@ -7,6 +7,7 @@ import inspect
 import datetime
 import commands as cm
 from optparse import OptionParser
+from data_update import DATAUPDATE
 
 class DEVICEINFO:
     def __init__(self):
@@ -112,6 +113,7 @@ class DEVICEINFO:
 
 def main():
     odj = DEVICEINFO()
+    obj2 = DATAUPDATE()
     options, args = odj.parserOption()
     if options.device_id:
         device_id = options.device_id
@@ -119,6 +121,7 @@ def main():
         pass
     else:
         odj.device_info()
+        obj2.data_update()
 
 
 if __name__ == "__main__":
