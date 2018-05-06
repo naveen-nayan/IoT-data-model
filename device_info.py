@@ -91,6 +91,7 @@ class DEVICEINFO:
             saved_js['CPU/DAY%'] = saved_js["CPU%"]
             saved_js['MEMORY/DAY%'] = saved_js["MEMORY%"]
             saved_js["FREE"] = js["FREE"]
+            saved_js["DATE"] = str(datetime.datetime.now().day)
             saved_js["COUNT"] = str('0')
             saved_js['CPU%'] = str('0')
             saved_js['MEMORY%'] = str('0')
@@ -107,7 +108,6 @@ def main():
         pass
     else:
         odj.device_info()
-        # odj.calculate_avg()
 
 
 if __name__ == "__main__":
