@@ -31,7 +31,7 @@ class DATAUPDATE:
 
     def data_update(self):
         if self.check_internet():
-            print "working internet pusing data to FIREBASE"
+            print "working internet pushing data to FIREBASE ...."
             with open(self.__info_path) as f:
                 json_data = json.load(f)
             device_id = str(json_data.get('DEVICE_ID', 'None'))
