@@ -49,6 +49,17 @@ class DEVICEINFO:
                     pass
         except:
             print("some error")
+        try:
+            output = cm.getoutput(self.__cmd)
+            free = output.split("\n")[1].split()[3]
+            data["FREE"] = free
+        except:
+            print ('some error')
+        cpu = psutil.cpu_percent(interval=1)
+        data["CPU%"] = cpu
+        memory = psutil.virtual_memory()[2]
+        data["MEMORY%"] = memory
+        data["COUNT"] = '1'
         with open(self.__info_path, 'w') as outfile:
             json.dump(data, outfile)
 
