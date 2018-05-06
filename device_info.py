@@ -16,7 +16,7 @@ class DEVICEINFO:
         self.__interface = '/sys/class/net'
         # saved json format
         self.__info = '{"DEVICE_ID": "0", "eth": "00:00:00:00:00:00", "wlan": "00:00:00:00:00:00", "FREE": "0",' \
-                      ' "CPU%": "0", "MEMORY%": "0", "COUNT": "0", "CPU/DAY%" : "0", "MEMORY/DAY%" : "0", "DATE" : "0"}'
+                      ' "CPU%": "0", "MEMORY%": "0", "COUNT": "0", "CPU_PER_DAY%" : "0", "MEMORY_PER_DAY%" : "0", "DATE" : "0"}'
         # working directory
         self.__work_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
         # Device json path
@@ -99,8 +99,8 @@ class DEVICEINFO:
             saved_js["MEMORY%"] = str(memory_avg)
             saved_js["COUNT"] = str(count)
         else:
-            saved_js['CPU/DAY%'] = str(saved_js["CPU%"])
-            saved_js['MEMORY/DAY%'] = str(saved_js["MEMORY%"])
+            saved_js['CPU_PER_DAY%'] = str(saved_js["CPU%"])
+            saved_js['MEMORY_PER_DAY%'] = str(saved_js["MEMORY%"])
             saved_js["FREE"] = str(js["FREE"])
             saved_js["DATE"] = str(datetime.datetime.now().day)
             saved_js["COUNT"] = '0'
