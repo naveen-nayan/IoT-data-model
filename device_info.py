@@ -4,10 +4,13 @@ import sys
 import json
 import psutil
 import inspect
+import getpass
 import datetime
 import commands as cm
+from crontab import CronTab
 from optparse import OptionParser
 from data_update import DATAUPDATE
+
 
 class DEVICEINFO:
     def __init__(self):
@@ -17,7 +20,8 @@ class DEVICEINFO:
         self.__interface = '/sys/class/net'
         # saved json format
         self.__info = '{"DEVICE_ID": "0", "eth": "00:00:00:00:00:00", "wlan": "00:00:00:00:00:00", "FREE": "0",' \
-                      ' "CPU%": "0", "MEMORY%": "0", "COUNT": "0", "CPU_PER_DAY%" : "0", "MEMORY_PER_DAY%" : "0", "DATE" : "0"}'
+                      ' "CPU%": "0", "MEMORY%": "0", "COUNT": "0", "CPU_PER_DAY%" : "0", "MEMORY_PER_DAY%" : "0", ' \
+                      '"DATE" : "0"}'
         # working directory
         self.__work_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
         # Device json path
@@ -63,6 +67,14 @@ class DEVICEINFO:
         data["COUNT"] = '1'
         with open(self.__info_path, 'w') as outfile:
             json.dump(data, outfile)
+
+    def add_cron(self):
+        username = getpass.getuser()
+        my_cron = CronTab(user=username)
+        job = my_cron.new(command=self.__work_path + '/device_info.py')
+        job.minute.every(1)
+        my_cron.write()
+        pass
 
     def device_info(self):
         data = json.loads(self.__info)
@@ -118,6 +130,7 @@ def main():
     if options.device_id:
         device_id = options.device_id
         odj.device_id(device_id)
+        odj.add_cron()
         pass
     else:
         odj.device_info()

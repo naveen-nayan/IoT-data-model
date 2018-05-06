@@ -1,8 +1,10 @@
+
 import os
 import json
 import inspect
 from firebase import firebase as fb
 import commands as cm
+
 
 class DATAUPDATE:
     def __init__(self):
@@ -22,7 +24,7 @@ class DATAUPDATE:
         for item in output.split("\n")[0].split(","):
             if "packetloss" in item:
                 loss = int(item.split("%")[0])
-                if loss < 100 :
+                if loss < 100:
                     return True
                 else:
                     return False
@@ -39,9 +41,11 @@ class DATAUPDATE:
             print "no internet"
             pass
 
+
 def main():
     odj = DATAUPDATE()
     odj.data_update()
+
 
 if __name__ == "__main__":
     main()
