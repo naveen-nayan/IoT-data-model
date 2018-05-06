@@ -4,6 +4,7 @@ import sys
 import json
 import psutil
 import inspect
+import datetime
 import commands as cm
 from optparse import OptionParser
 
@@ -15,7 +16,7 @@ class DEVICEINFO:
         self.__interface = '/sys/class/net'
         # saved json format
         self.__info = '{"DEVICE_ID": "0", "eth": "00:00:00:00:00:00", "wlan": "00:00:00:00:00:00", "FREE": "0",' \
-                      ' "CPU%": "0", "MEMORY%": "0", "COUNT": "0", "CPU/DAY%" : "0", "MEMORY/DAY%" : "0"}'
+                      ' "CPU%": "0", "MEMORY%": "0", "COUNT": "0", "CPU/DAY%" : "0", "MEMORY/DAY%" : "0", "DATE" : "0"}'
         # working directory
         self.__work_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
         # Device json path
@@ -30,8 +31,10 @@ class DEVICEINFO:
     def device_id(self, id):
         data = json.loads(self.__info)
         data["DEVICE_ID"] = str(id)
-        list_interface = os.listdir(self.__interface)
+        today = datetime.datetime.now().day
+        data["DATE"] = today
         # find mac of eth and wlan
+        list_interface = os.listdir(self.__interface)
         try:
             for interface_name in list_interface:
                 if "e" in interface_name[0]:
@@ -68,19 +71,29 @@ class DEVICEINFO:
         self.calculate_avg(data)
 
     def calculate_avg(self, js):
+        today = datetime.datetime.now().day
         with open(self.__info_path) as f:
             saved_js = json.load(f)
-        old_count = float(saved_js.get('COUNT','None'))
-        old_cpu_avg = float(saved_js.get('CPU%', 'None'))
-        old_memory_avg = float(saved_js.get('MEMORY%', 'None'))
-
-        cpu_avg = (float(js.get('CPU%', 'None')) + (old_cpu_avg * old_count))/ (old_count + 1.0)
-        memory_avg = (float(js.get('MEMORY%', 'None')) + (old_memory_avg * old_count)) / (old_count + 1.0)
-        count = old_count + 1.0
-        # make new json or update it
-        saved_js["CPU%"] = cpu_avg
-        saved_js["MEMORY%"] = memory_avg
-        saved_js["COUNT"] = count
+        print saved_js
+        if str(today) == str(saved_js['DATE']):
+            old_count = float(saved_js.get('COUNT','None'))
+            old_cpu_avg = float(saved_js.get('CPU%', 'None'))
+            old_memory_avg = float(saved_js.get('MEMORY%', 'None'))
+            cpu_avg = (float(js.get('CPU%', 'None')) + (old_cpu_avg * old_count))/ (old_count + 1.0)
+            memory_avg = (float(js.get('MEMORY%', 'None')) + (old_memory_avg * old_count)) / (old_count + 1.0)
+            count = old_count + 1.0
+            # make new json or update it
+            saved_js["FREE"] = js["FREE"]
+            saved_js["CPU%"] = cpu_avg
+            saved_js["MEMORY%"] = memory_avg
+            saved_js["COUNT"] = count
+        else:
+            saved_js['CPU/DAY%'] = saved_js["CPU%"]
+            saved_js['MEMORY/DAY%'] = saved_js["MEMORY%"]
+            saved_js["FREE"] = js["FREE"]
+            saved_js["COUNT"] = str('0')
+            saved_js['CPU%'] = str('0')
+            saved_js['MEMORY%'] = str('0')
         with open(self.__info_path, 'w') as outfile:
             json.dump(saved_js, outfile)
         print saved_js
