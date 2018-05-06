@@ -32,7 +32,7 @@ class DEVICEINFO:
         data = json.loads(self.__info)
         data["DEVICE_ID"] = str(id)
         today = datetime.datetime.now().day
-        data["DATE"] = today
+        data["DATE"] = str(today)
         # find mac of eth and wlan
         list_interface = os.listdir(self.__interface)
         try:
@@ -52,13 +52,13 @@ class DEVICEINFO:
         try:
             output = cm.getoutput(self.__cmd)
             free = output.split("\n")[1].split()[3]
-            data["FREE"] = free
+            data["FREE"] = str(free)
         except:
             print ('some error')
         cpu = psutil.cpu_percent(interval=1)
-        data["CPU%"] = cpu
+        data["CPU%"] = str(cpu)
         memory = psutil.virtual_memory()[2]
-        data["MEMORY%"] = memory
+        data["MEMORY%"] = str(memory)
         data["COUNT"] = '1'
         with open(self.__info_path, 'w') as outfile:
             json.dump(data, outfile)
@@ -94,18 +94,18 @@ class DEVICEINFO:
             memory_avg = (float(js.get('MEMORY%', 'None')) + (old_memory_avg * old_count)) / (old_count + 1.0)
             count = old_count + 1.0
             # make new json or update it
-            saved_js["FREE"] = js["FREE"]
-            saved_js["CPU%"] = cpu_avg
-            saved_js["MEMORY%"] = memory_avg
-            saved_js["COUNT"] = count
+            saved_js["FREE"] = str(js["FREE"])
+            saved_js["CPU%"] = str(cpu_avg)
+            saved_js["MEMORY%"] = str(memory_avg)
+            saved_js["COUNT"] = str(count)
         else:
-            saved_js['CPU/DAY%'] = saved_js["CPU%"]
-            saved_js['MEMORY/DAY%'] = saved_js["MEMORY%"]
-            saved_js["FREE"] = js["FREE"]
+            saved_js['CPU/DAY%'] = str(saved_js["CPU%"])
+            saved_js['MEMORY/DAY%'] = str(saved_js["MEMORY%"])
+            saved_js["FREE"] = str(js["FREE"])
             saved_js["DATE"] = str(datetime.datetime.now().day)
-            saved_js["COUNT"] = str('0')
-            saved_js['CPU%'] = str('0')
-            saved_js['MEMORY%'] = str('0')
+            saved_js["COUNT"] = '0'
+            saved_js['CPU%'] = '0'
+            saved_js['MEMORY%'] = '0'
         with open(self.__info_path, 'w') as outfile:
             json.dump(saved_js, outfile)
         print saved_js
