@@ -1,8 +1,11 @@
+
 import os
+import sys
 import json
 import psutil
+import inspect
 import commands as cm
-
+from optparse import OptionParser
 
 class DEVICEINFO:
     def __init__(self):
@@ -11,11 +14,22 @@ class DEVICEINFO:
         # path where mac address is saved
         self.__interface = '/sys/class/net'
         # saved json format
-        self.__info = '{"eth": "00:00:00:00:00:00", "wlan": "00:00:00:00:00:00", "FREE": "0",' \
-                      ' "CPU%": "0", "MEMORY%": "0"}'
+        self.__info = '{"DEVICE_ID": "0", "eth": "00:00:00:00:00:00", "wlan": "00:00:00:00:00:00", "FREE": "0",' \
+                      ' "CPU%": "0", "MEMORY%": "0", "COUNT": "0", "CPU/DAY%" : "0", "MEMORY/DAY%" : "0"}'
+        # working directory
+        self.__work_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+        # Device json path
+        self.__info_path = self.__work_path + '/device_info.json'
 
-    def device_info(self):
+    def parserOption(self):
+        parser = OptionParser()
+        parser.add_option("-d", "--device_id", dest="device_id", help="run to set device id and default json")
+        options, args = parser.parse_args(sys.argv)
+        return options, args
+
+    def device_id(self, id):
         data = json.loads(self.__info)
+        data["DEVICE_ID"] = str(id)
         list_interface = os.listdir(self.__interface)
         # find mac of eth and wlan
         try:
@@ -32,6 +46,11 @@ class DEVICEINFO:
                     pass
         except:
             print("some error")
+        with open(self.__info_path, 'w') as outfile:
+            json.dump(data, outfile)
+
+    def device_info(self):
+        data = json.loads(self.__info)
         # find disk space of '/'
         try:
             output = cm.getoutput(self.__cmd)
@@ -46,11 +65,36 @@ class DEVICEINFO:
         memory = psutil.virtual_memory()[2]
         data["MEMORY%"] = memory
         print data
+        self.calculate_avg(data)
 
+    def calculate_avg(self, js):
+        with open(self.__info_path) as f:
+            saved_js = json.load(f)
+        old_count = float(saved_js.get('COUNT','None'))
+        old_cpu_avg = float(saved_js.get('CPU%', 'None'))
+        old_memory_avg = float(saved_js.get('MEMORY%', 'None'))
+
+        cpu_avg = (float(js.get('CPU%', 'None')) + (old_cpu_avg * old_count))/ (old_count + 1.0)
+        memory_avg = (float(js.get('MEMORY%', 'None')) + (old_memory_avg * old_count)) / (old_count + 1.0)
+        count = old_count + 1.0
+        # make new json or update it
+        saved_js["CPU%"] = cpu_avg
+        saved_js["MEMORY%"] = memory_avg
+        saved_js["COUNT"] = count
+        with open(self.__info_path, 'w') as outfile:
+            json.dump(saved_js, outfile)
+        print saved_js
 
 def main():
     odj = DEVICEINFO()
-    odj.device_info()
+    options, args = odj.parserOption()
+    if options.device_id:
+        device_id = options.device_id
+        odj.device_id(device_id)
+        pass
+    else:
+        odj.device_info()
+        # odj.calculate_avg()
 
 
 if __name__ == "__main__":
