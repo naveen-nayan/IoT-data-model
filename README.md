@@ -12,7 +12,8 @@ This model is designed to check memory used, free disk size, ethernet and wifi M
 3. Install required package of python using pip  
    pip install -r requirement.txt  
 4. set this module on linux based sysytem  
-   python device_info.py -d <any id for your system>  
+   python device_info.py -d "any id for your system"
+   it save memory used, free disk size, ethernet and wifi MAC Address in json format and add 1 minute crontab
 5. finish  
 
 ## How it works
