@@ -12,8 +12,8 @@ This model is designed to check memory used, free disk size, ethernet and wifi M
 3. Install required package of python using pip  
    pip install -r requirement.txt  
 4. set this module on linux based sysytem  
-   python device_info.py -d "any id for your system"
-   it save memory used, free disk size, ethernet and wifi MAC Address in json format and add 1 minute crontab
+   python device_info.py -d "any id for your system"   
+   it save memory used, free disk size, ethernet and wifi MAC Address in json format and add 1 minute crontab   
 5. finish  
 
 ## How it works
@@ -22,7 +22,7 @@ This model is designed to check memory used, free disk size, ethernet and wifi M
 1. Get data from linux based system i.e. memory used, free disk size, ethernet and wifi MAC Address
 2. save these data in json object
 3. average cpu used% and memory used%
-4. check if internet is working or not
+4. check if internet is working or not  
 5. if intenet is working it push json object to firebase or update data on it
 6. finish
 
