@@ -28,7 +28,7 @@ This model is designed to check memory used, free disk size, ethernet and wifi M
 
 ## How to get updated data from Firebase using script get_device_data.py
 
-1. run the script it ask for the number of devices
+1. run the script get_device_data.py it ask for the number of devices
 2. Enter numer of device whice is below 400 because only 400 fake nodes are present
 3. it will show data in a simple format
 4. Below is image of data from firebase
