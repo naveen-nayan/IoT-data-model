@@ -16,4 +16,4 @@ This model is designed to check memory used, free disk size, ethernet and wifi M
 5. finish  
 
 ## How it works
-![Working model of IoT-data-model](https://github.com/naveen-nayan/IoT-data-model/blob/masterIoT-data-model.jpg)
+![Working model of IoT-data-model](https://github.com/naveen-nayan/IoT-data-model/blob/master/IoT-data-model.jpg)
