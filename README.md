@@ -26,6 +26,9 @@ This model is designed to check memory used, free disk size, ethernet and wifi M
 5. if intenet is working it push json object to firebase or update data on it
 6. finish
 
+## Data on Firebase
+   ![Data-on-fiebase](https://github.com/naveen-nayan/IoT-data-model/blob/master/firbase-data.png)
+   
 ## How to get updated data from Firebase using script get_device_data.py
 
 1. run the script get_device_data.py it ask for the number of devices
