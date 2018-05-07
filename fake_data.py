@@ -22,7 +22,7 @@ with open(data_path, 'w' ) as new_file:
                                                             random.randint(17, 255), random.randint(17, 255),
                                                             random.randint(17, 255), random.randint(17, 255))
         data["Start bit"] = "00"
-        data["Device id"] = i
+        data["Device id"] = "{0:b}".format(i)
         data["eth MAC"] = eth
         data["wlan MAC"] = wlan
         data["Stop bit"] = "11"
