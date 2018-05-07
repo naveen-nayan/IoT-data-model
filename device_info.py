@@ -130,7 +130,7 @@ def main():
     if options.device_id:
         device_id = options.device_id
         odj.device_id(device_id)
-        #odj.add_cron()
+        odj.add_cron()
         pass
     else:
         odj.device_info()
