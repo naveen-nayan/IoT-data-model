@@ -10,7 +10,7 @@ class GETDATA:
         count = 0
         firebase = fb.FirebaseApplication(self.__dbURL, authentication=None)
         result = firebase.get(self.__node, None)
-        print ('{0:10}  {1:20}  {2:20}  {3:20}  {4:30}  {5:30}'.format("Device id", "Avg CPU/day", "Avg Memory/day",
+        print ('{0:10}  {1:10}  {2:20}  {3:20}  {4:20}  {5:30} {6:30}'.format("Sr. No.", "Device id", "Avg CPU/day", "Avg Memory/day",
                                                                        "Disk Space", "eth Address", " wlan Address"))
         for keys in result.keys():
             if int(count) < int(no_of_device):
@@ -21,7 +21,7 @@ class GETDATA:
                 disk = js.get("FREE", "None")
                 eth = js.get("eth", "None")
                 wlan = js.get("wlan", "None")
-                print('{0:10}  {1:20}  {2:20}  {3:20}  {4:30}  {5:30}'.format(device_id, str(cpu) + "%", str(mem) + "%",
+                print('{0:10}  {1:10}  {2:20}  {3:20}  {4:20}  {5:30}  {6:30}'.format(str(count + 1), device_id, str(cpu) + "%", str(mem) + "%",
                                                                               disk, eth, wlan))
                 count = count + 1
             else:
