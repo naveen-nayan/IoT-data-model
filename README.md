@@ -37,3 +37,9 @@ This model is designed to check memory used, free disk size, ethernet and wifi M
 4. Below is image of data from firebase
 
 ![Data-from-fiebase](https://github.com/naveen-nayan/IoT-data-model/blob/master/data-from-firebase.png)
+
+## How to create fake Data set
+1. run script fake_data.py
+2. input number of devices
+3. it will show data set path
+4. finish
