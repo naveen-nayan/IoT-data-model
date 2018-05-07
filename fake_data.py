@@ -14,5 +14,7 @@ for i in range(101, 200):
     json_data['CPU_PER_DAY%'] = str(json_data["CPU%"])
     json_data['MEMORY_PER_DAY%'] = str(json_data["MEMORY%"])
     print json_data
+    with open(info_path, 'w') as outfile:
+        json.dump(json_data, outfile)
     cmd = "python {0}/device_info.py".format(work_path)
     os.system(cmd)
