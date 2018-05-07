@@ -26,3 +26,4 @@ with open(data_path, 'w' ) as new_file:
         data["eth MAC"] = eth
         data["wlan MAC"] = wlan
         csv_writer.writerow(data)
+print ("data file present in {}".format(data_path))
