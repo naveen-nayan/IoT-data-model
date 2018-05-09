@@ -1,44 +1,48 @@
 import os
 import inspect
 import csv
-
 import sys
 
-work_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-# path for csv data set
-data_path = work_path + '/device_info.data'
-no_of_devices = input("Please Enter count of Device : ")
 
-'''
-mac = "18:5e:0f:24:78:54"
-list size = 6
-'''
+class FAKEDATA:
 
-start_range = 0
-max_range = int("FFFFFFFFFFFF", 16)
+    def __init__(self):
+        # working directory
+        self.__work_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+        # path for csv data set
+        self.__data_path = self.__work_path + '/device_info.data'
+        self.__fieldname = ['Device id', 'eth MAC', 'wlan MAC']
+        self.__maxrange = int("FFFFFFFFFFFF", 16)
+        self.__json_Data = {"Device id": "", "eth MAC": "", "wlan MAC": ""}
+        self.__startrange = 0
 
-if no_of_devices > max_range:
-    exit()
-
-# create a csv file as data set
-with open(data_path, 'w') as new_file:
-    fieldname = ['Device id', 'eth MAC', 'wlan MAC']
-    csv_writer = csv.DictWriter(new_file, fieldnames=fieldname, delimiter=',')
-    while True:
-        data = {"Device id": "", "eth MAC": "", "wlan MAC": ""}
-        mac_generated = "{0:016x}".format(start_range)
-        list1 = []
-        while mac_generated:
-            list1.append(mac_generated[:2])
-            mac_generated = mac_generated[2:]
-        print list1
-        mac = "{0}:{1}:{2}:{3}{4}:{5}".format(list1[0], list1[1], list1[2], list1[3], list1[4], list1[5])
-        data["Device id"] = "{0}".format(start_range + 1)
-        data["eth MAC"] = mac
-        data["wlan MAC"] = mac
-        csv_writer.writerow(data)
-        sys.stdout.write('\r' + "Creating data set for : " +str(start_range + 1))
-        start_range += 1
-        if start_range == no_of_devices:
+    def write_csv(self):
+        no_of_devices = input("Please Enter count of Device : ")
+        if no_of_devices > self.__maxrange:
             exit()
-# print ("data file present in {}".format(data_path))
+        else:
+            with open(self.__data_path, 'w') as new_file:
+                fieldname = ['Device id', 'eth MAC', 'wlan MAC']
+                csv_writer = csv.DictWriter(new_file, fieldnames=fieldname, delimiter=',')
+                while True:
+                    mac_generated = "{0:012x}".format(self.__startrange)
+                    mac = "{0}:{1}:{2}:{3}:{4}:{5}".format(mac_generated[0:2], mac_generated[2:4], mac_generated[4:6],
+                                                           mac_generated[6:8], mac_generated[8:10],
+                                                           mac_generated[10:12])
+                    self.__json_Data["Device id"] = "{0}".format(self.__startrange + 1)
+                    self.__json_Data["eth MAC"] = self.__json_Data["wlan MAC"] = mac
+                    csv_writer.writerow(self.__json_Data)
+                    sys.stdout.write('\r' + "Creating data set for Device id : " + str(self.__startrange + 1))
+                    self.__startrange += 1
+                    if self.__startrange == no_of_devices:
+                        print ("\ndata file present in {}".format(self.__data_path))
+                        exit()
+
+
+def main():
+    odj = FAKEDATA()
+    odj.write_csv()
+
+
+if __name__ == "__main__":
+    main()
