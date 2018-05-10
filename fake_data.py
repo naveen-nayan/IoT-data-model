@@ -12,7 +12,7 @@ class FAKEDATA:
         # path for csv data set
         self.__data_path = self.__work_path + '/device_info.data'
         self.__fieldname = ['Device id', 'eth MAC', 'wlan MAC']
-        self.__maxrange = int("FFFFFFFFFFFF", 16)
+        self.__maxrange = int("FFFFFFFFFFFF", 16)/2
         self.__json_Data = {"Device id": "", "eth MAC": "", "wlan MAC": ""}
         self.__startrange = 0
 
