@@ -61,3 +61,12 @@ This model is designed to check memory used, free disk size, ethernet and wifi M
 - append 50 to make eth data  
 - append 18 to make wlan data  
 - make a data set in csv format  
+
+#### second approach   
+- convert serial no for device id to hex    
+- change it to 12 character string digit with zero(0) padded  
+- format according to mac address property  
+- this need only one infinite loop  
+- and data set is also not duplicating  
+- its always increased by one until max limit **ffffffffffff**  
+
