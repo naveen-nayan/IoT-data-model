@@ -31,7 +31,7 @@ class MAKEFAKEDATA:
                     self.__json_Data["eth MAC"] = self.generate_mac(True)
                     self.__json_Data["wlan MAC"] = self.generate_mac(True)
                     csv_writer.writerow(self.__json_Data)
-                    # sys.stdout.write('\r' + "Creating data set for Device id : " + str(count + 1))
+                    sys.stdout.write('\r' + "Creating data set for Device id : " + str(count + 1))
                     count += 1
                     if count == no_of_devices:
                         print ("\ndata file present in {}".format(self.__data_path))
@@ -49,7 +49,7 @@ class MAKEFAKEDATA:
                 flag = False
         self.__js[self.__mac] = self.__startrange
         self.__startrange += 1
-        print self.__js
+        # print self.__js
         return self.__mac
 
 
